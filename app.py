@@ -2,6 +2,7 @@ from flask import Flask
 from database import db
 from routes import mensagens_bp
 from user_routes import usuarios_bp
+from comment_routes import comentarios_bp
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mensagens.db'
@@ -14,6 +15,8 @@ with app.app_context():
 
 app.register_blueprint(mensagens_bp)
 app.register_blueprint(usuarios_bp)
+
+app.register_blueprint(comentarios_bp)
 
 if __name__ == '__main__':
     app.run(debug=True)

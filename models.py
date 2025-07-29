@@ -15,3 +15,13 @@ class Mensagem(db.Model):
     conteudo = db.Column(db.Text, nullable=False)
     data_criacao = db.Column(db.DateTime, default=datetime.utcnow)
     autor_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+
+class Comentario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    conteudo = db.Column(db.Text, nullable=False)
+    dataHora = db.Column(db.DateTime, default=datetime.utcnow)
+    autor_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    mensagem_id = db.Column(db.Integer, db.ForeignKey('mensagem.id'), nullable=False)
+
+    autor = db.relationship('Usuario', backref='comentarios')
+    mensagem = db.relationship('Mensagem', backref='comentarios')
