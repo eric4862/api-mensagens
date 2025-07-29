@@ -9,10 +9,13 @@ def criar_mensagem():
     conteudo = request.json.get('conteudo')
     if not conteudo:
         return jsonify({"erro": "Conteúdo é obrigatório."}), 400
-    msg = Mensagem(conteudo=conteudo)
-    db.session.add(msg)
+
+    autor_padrao = 1  # ID do usuário padrão
+    nova = Mensagem(conteudo=conteudo, autor_id=autor_padrao)
+    db.session.add(nova)
     db.session.commit()
-    return jsonify({"id": msg.id, "conteudo": msg.conteudo}), 201
+
+    return jsonify({"id": nova.id, "conteudo": nova.conteudo, "autor_id": nova.autor_id}), 201
 
 @mensagens_bp.route('/mensagens', methods=['GET'])
 def listar_mensagens():
